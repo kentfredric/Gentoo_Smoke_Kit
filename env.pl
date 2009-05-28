@@ -13,6 +13,7 @@ my $rcfile = file("$FindBin::Bin/env.rc");
 chdir( $rcfile->dir->parent->absolute->stringify );
 local *ENV = *ENV;
 $ENV{CHROOTING} = $rcfile->dir->parent->absolute->stringify;
+$ENV{d} =  $rcfile->dir->absolute->stringify;
 
 system('bash', '--rcfile', $rcfile->absolute->stringify );
 
