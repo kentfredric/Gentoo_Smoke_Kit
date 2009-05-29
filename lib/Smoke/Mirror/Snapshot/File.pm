@@ -14,13 +14,19 @@ use MooseX::Declare;
 #
 
 class Smoke::Mirror::Snapshot::File {
+	# Imports
     use MooseX::Has::Sugar qw( :allattrs );
     use MooseX::Types::Moose qw( ArrayRef Str Any RegexpRef HashRef);
-    use Smoke::Mirror            ();
-    use Carp                     ();
-    use MooseX::AttributeHelpers ();
     use MooseX::ClassAttribute qw( class_has );
-    use Moose::Autobox;
+	use Moose::Autobox;
+
+	# Depends
+    require MooseX::AttributeHelpers;
+	require Smoke::Mirror;
+	require Smoke::Mirror::Snapshot;
+	
+    use namespace::autoclean -also => qw/^_ext_/;
+
 
     has media    => ( isa => Str, rw, required );
     has platform => ( isa => Str, rw, required );
@@ -40,8 +46,6 @@ class Smoke::Mirror::Snapshot::File {
 		$self->metatype();
 		$self->flavour();
 	};
-
-    use namespace::autoclean -also => qw/^_ext_/;
 
     sub _ext_tokenize {
         my $str = shift;
